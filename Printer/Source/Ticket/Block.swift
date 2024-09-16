@@ -68,7 +68,9 @@ public extension Block {
     }
     
     // dividing
-    static var dividing = Block(Dividing.default)
+    static func dividing(_ character: String) -> Block {
+        return Block(Dividing(provider: Character(character), printDensity: 384, fontDensity: 12))
+    }
     
     // image
     static func image(_ im: Image, attributes: TicketImage.PredefinedAttribute...) -> Block {
