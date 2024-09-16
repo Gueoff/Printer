@@ -55,6 +55,9 @@ public extension Text {
         case light
         case scale(ScaleLevel)
         case feed(UInt8)
+        case blackBg
+        case whiteBg
+        case custom(Array<UInt8>)
         
         public var attribute: [UInt8] {
             switch self {
@@ -70,6 +73,12 @@ public extension Text {
                 return [0x1D, 0x21, v.rawValue]
             case let .feed(v):
                 return ESC_POSCommand.feed(points: v).rawValue
+            case .blackBg:
+                return [29, 66, 1]
+            case .whiteBg:
+                return [29, 66, 0]
+            case let .custom(v):
+                return v
             }
         }
     }
