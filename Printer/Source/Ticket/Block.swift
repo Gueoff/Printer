@@ -68,8 +68,8 @@ public extension Block {
     }
     
     // dividing
-    static func dividing(_ character: String) -> Block {
-        return Block(Dividing(provider: Character(character), printDensity: 384, fontDensity: 12))
+    static func dividing(_ character: String, printDensity: Int = 384, fontDensity: Int = 12) -> Block {
+        return Block(Dividing(provider: Character(character), printDensity: printDensity, fontDensity: fontDensity))
     }
     
     // image
