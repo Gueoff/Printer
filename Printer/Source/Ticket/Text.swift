@@ -47,6 +47,7 @@ public extension Text {
             case l5 = 0x55
             case l6 = 0x66
             case l7 = 0x77
+            case l8 = 0x01 // Height *2
         }
         
         case alignment(NSTextAlignment)
