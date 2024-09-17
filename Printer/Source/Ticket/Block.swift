@@ -22,16 +22,34 @@ public struct Block: Printable {
 
     public static var defaultFeedPoints: UInt8 = 70
     
-    private let feedPoints: UInt8
-    private let dataProvider: BlockDataProvider
+    private enum DataProviderType {
+          case single(BlockDataProvider)
+          case multiple([BlockDataProvider])
+      }
     
+    private let feedPoints: UInt8
+    private let dataProvider: DataProviderType
+
     public init(_ dataProvider: BlockDataProvider, feedPoints: UInt8 = Block.defaultFeedPoints) {
         self.feedPoints = feedPoints
-        self.dataProvider = dataProvider
+        self.dataProvider = .single(dataProvider)
+    }
+
+    public init(_ dataProviders: [BlockDataProvider], feedPoints: UInt8 = Block.defaultFeedPoints) {
+        self.feedPoints = feedPoints
+        self.dataProvider = .multiple(dataProviders)
     }
     
     public func data(using encoding: String.Encoding) -> Data {
-        return dataProvider.data(using: encoding) + Data.print(feedPoints)
+        switch dataProvider {
+        case .single(let provider):
+            return provider.data(using: encoding) + Data.print(feedPoints)
+        case .multiple(let providers):
+            let combinedData = providers.reduce(Data()) { (result, provider) in
+                return result + provider.data(using: encoding)
+            }
+            return combinedData + Data.print(feedPoints)
+        }
     }
 }
 
