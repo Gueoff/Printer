@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0A7713091DF905AE0009867F /* Printer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A7712FB1DF905AE0009867F /* Printer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5BD9B60222EE1B4900174ABA /* DummyPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD9B5ED22EE1B4900174ABA /* DummyPrinter.swift */; };
-		5BD9B60322EE1B4900174ABA /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD9B5EF22EE1B4900174ABA /* Todo.swift */; };
 		5BD9B60422EE1B4900174ABA /* BluetoothPrinterSelectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD9B5F122EE1B4900174ABA /* BluetoothPrinterSelectTableViewController.swift */; };
 		5BD9B60522EE1B4900174ABA /* BluetoothCentralManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD9B5F222EE1B4900174ABA /* BluetoothCentralManagerDelegate.swift */; };
 		5BD9B60622EE1B4900174ABA /* BluetoothPrinterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD9B5F322EE1B4900174ABA /* BluetoothPrinterManager.swift */; };
@@ -25,6 +24,7 @@
 		5BD9B61022EE1B4900174ABA /* Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD9B5FF22EE1B4900174ABA /* Ticket.swift */; };
 		5BD9B61122EE1B4900174ABA /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD9B60022EE1B4900174ABA /* QRCode.swift */; };
 		5BD9B61222EE1B4900174ABA /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD9B60122EE1B4900174ABA /* Text.swift */; };
+		9B095C392C9C71E400E32110 /* NetworkPrinterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B095C382C9C71E400E32110 /* NetworkPrinterManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +32,6 @@
 		0A7712FB1DF905AE0009867F /* Printer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Printer.h; sourceTree = "<group>"; };
 		0A7712FC1DF905AE0009867F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BD9B5ED22EE1B4900174ABA /* DummyPrinter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyPrinter.swift; sourceTree = "<group>"; };
-		5BD9B5EF22EE1B4900174ABA /* Todo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		5BD9B5F122EE1B4900174ABA /* BluetoothPrinterSelectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothPrinterSelectTableViewController.swift; sourceTree = "<group>"; };
 		5BD9B5F222EE1B4900174ABA /* BluetoothCentralManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothCentralManagerDelegate.swift; sourceTree = "<group>"; };
 		5BD9B5F322EE1B4900174ABA /* BluetoothPrinterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothPrinterManager.swift; sourceTree = "<group>"; };
@@ -48,6 +47,7 @@
 		5BD9B5FF22EE1B4900174ABA /* Ticket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ticket.swift; sourceTree = "<group>"; };
 		5BD9B60022EE1B4900174ABA /* QRCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
 		5BD9B60122EE1B4900174ABA /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
+		9B095C382C9C71E400E32110 /* NetworkPrinterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPrinterManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,7 +118,7 @@
 		5BD9B5EE22EE1B4900174ABA /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				5BD9B5EF22EE1B4900174ABA /* Todo.swift */,
+				9B095C382C9C71E400E32110 /* NetworkPrinterManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -270,6 +270,7 @@
 				5BD9B60E22EE1B4900174ABA /* Block.swift in Sources */,
 				5BD9B60A22EE1B4900174ABA /* Dividing.swift in Sources */,
 				5BD9B60522EE1B4900174ABA /* BluetoothCentralManagerDelegate.swift in Sources */,
+				9B095C392C9C71E400E32110 /* NetworkPrinterManager.swift in Sources */,
 				5BD9B61122EE1B4900174ABA /* QRCode.swift in Sources */,
 				5BD9B60922EE1B4900174ABA /* Printable.swift in Sources */,
 				5BD9B60722EE1B4900174ABA /* BluetoothPeripheralDelegate.swift in Sources */,
@@ -281,7 +282,6 @@
 				5BD9B60822EE1B4900174ABA /* PrinterError.swift in Sources */,
 				5BD9B60222EE1B4900174ABA /* DummyPrinter.swift in Sources */,
 				5BD9B60C22EE1B4900174ABA /* Blank.swift in Sources */,
-				5BD9B60322EE1B4900174ABA /* Todo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,7 +420,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Printer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.KevinGong.Printer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -444,7 +444,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Printer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.KevinGong.Printer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
