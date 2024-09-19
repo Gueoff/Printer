@@ -58,6 +58,14 @@ public struct BluetoothPrinter {
         self.identifier = peripheral.identifier
         self.state = peripheral.printerState
     }
+
+    public func getName() -> String? {
+        return self.name
+    }
+    
+    public func getIdentifier() -> String {
+        return self.identifier.uuidString
+    }
 }
 
 public enum NearbyPrinterChange {
@@ -198,7 +206,8 @@ public class BluetoothPrinterManager {
         }
 
         let serviceUUIDs = BluetoothPrinterManager.specifiedServices.map { CBUUID(string: $0) }
-        centralManager.scanForPeripherals(withServices: serviceUUIDs, options: nil)
+
+        centralManager.scanForPeripherals(withServices: nil, options: nil)
 
         return nil
     }
@@ -275,7 +284,7 @@ public class BluetoothPrinterManager {
     }
 
     public func print(_ content: ESCPOSCommandsCreator, encoding: String.Encoding = String.GBEncoding.GB_18030_2000, completeBlock: ((PError?) -> ())? = nil) {
-
+        
         guard let p = peripheralDelegate.writablePeripheral, let c = peripheralDelegate.writablecharacteristic else {
 
             completeBlock?(.deviceNotReady)
@@ -284,9 +293,13 @@ public class BluetoothPrinterManager {
 
         for data in content.data(using: encoding) {
 
-            p.writeValue(data, for: c, type: .withoutResponse)
+            p.writeValue(data, for: c, type: .withResponse)
         }
 
+        // Cut the paper after printing
+        let paperCutCommand: [UInt8] = [0x1D, 0x56, 0x00]
+        p.writeValue(Data(paperCutCommand), for: c, type: .withResponse)
+        
         completeBlock?(nil)
     }
 

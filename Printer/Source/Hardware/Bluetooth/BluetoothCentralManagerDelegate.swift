@@ -36,12 +36,12 @@ class BluetoothCentralManagerDelegate: NSObject, CBCentralManagerDelegate {
     private let lock = NSLock()
 
     subscript(uuid: UUID) -> CBPeripheral? {
+        
         get {
             lock.lock(); defer { lock.unlock() }
             return discoveredPeripherals[uuid]
         }
         set {
-
             let oldValue = discoveredPeripherals[uuid]?.identifier
 
             lock.lock()
@@ -68,7 +68,6 @@ class BluetoothCentralManagerDelegate: NSObject, CBCentralManagerDelegate {
     }
 
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
-
         centralManagerDidUpdateState?(central)
 
         let ss = services.map { CBUUID(string: $0) }
@@ -81,8 +80,7 @@ class BluetoothCentralManagerDelegate: NSObject, CBCentralManagerDelegate {
     }
 
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-
-        guard let serviceUUIDs = advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID],
+        guard let serviceUUIDs = (self.services?.map { CBUUID(string: $0) }) as? [CBUUID],
             let isConnectable = advertisementData[CBAdvertisementDataIsConnectable] as? NSNumber,
             serviceUUIDs.count > 0, isConnectable == 1 else {
                 return
@@ -92,7 +90,6 @@ class BluetoothCentralManagerDelegate: NSObject, CBCentralManagerDelegate {
         let peripheralServiceSet = Set(serviceUUIDs.map { $0.uuidString } )
 
         guard peripheralServiceSet.intersection(services).count > 0 else {
-
             return
         }
 
@@ -120,12 +117,10 @@ class BluetoothCentralManagerDelegate: NSObject, CBCentralManagerDelegate {
     }
 
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-
         centralManagerDidFailToConnectPeripheralWithError?(central, peripheral, error)
     }
 
     public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-
         centralManagerDidDisConnectPeripheralWithError?(central, peripheral, error)
     }
 }
