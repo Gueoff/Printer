@@ -10,15 +10,18 @@ import Foundation
 import Network
 import MobileCoreServices
 
+@available(iOS 12.0, *)
 public class NetworkPrinterManager {
     private var networkConnection: NWConnection?
+    
+    public init() {}
     
     public enum TicketPrintError: Error {
         case networkError(NWError)
         case unknownError
     }
 
-    public func connectNetwork(ip: String, port: Int) {
+    public func connect(ip: String, port: Int) {
         let PORT = NWEndpoint.Port(String(port))
         let ipAddress = NWEndpoint.Host(ip)
         let queue = DispatchQueue(label: "TCP Client Queue")
