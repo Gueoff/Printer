@@ -10,7 +10,7 @@ Swift ticket printer framework for ESC/POS-compatible thermal printers
 * Crate printable ticket easily.
 
 ## Requirements
-* iOS 9.0+
+* iOS 12.0+
 * Swift 5.0
 
 ## Installation

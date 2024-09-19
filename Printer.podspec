@@ -18,8 +18,8 @@ Pod::Spec.new do |s|
 
   s.author             = { "kevin" => "aoxianglele@icloud.com" }
  
-  s.platform     = :ios, "9.0"
-  s.ios.deployment_target = "9.0"
+  s.platform     = :ios, "12.0"
+  s.ios.deployment_target = "12.0"
 
   s.source       = { :git => "https://github.com/KevinGong2013/Printer.git", :tag => s.version.to_s }
 
