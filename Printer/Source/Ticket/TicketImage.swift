@@ -24,10 +24,9 @@ public struct TicketImage: BlockDataProvider {
             result.append(Data(attrs.flatMap { $0.attribute }))
         }
         
-        if let data = image.ticketData {
-            result.append(data)
-        }
-        
+        let data = image.assemblePrintableData()
+        result.append(Data(bytes: data, count: data.count))
+
         return result
     }
 }
