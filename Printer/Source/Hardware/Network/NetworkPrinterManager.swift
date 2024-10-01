@@ -13,7 +13,9 @@ import MobileCoreServices
 @available(iOS 12.0, *)
 public class NetworkPrinterManager {
     private var networkConnection: NWConnection?
-    
+    private var ip: String?
+    private var port: Int?
+
     public init() {}
 
     public enum TicketPrintError: Error {
@@ -33,6 +35,38 @@ public class NetworkPrinterManager {
     public func getConnectionState() -> NWConnection.State? {
         return self.networkConnection?.state
     }
+    
+    public func getIp() -> String? {
+        return self.ip
+    }
+    
+    public func getPort() -> Int? {
+        return self.port
+    }
+    
+    public func waitForConnectionReady(timeout: TimeInterval = 6, completion: @escaping (Bool) -> Void) {
+        let startTime = Date()
+
+        DispatchQueue.global().async {
+            while true {
+                if self.getConnectionState() == .ready {
+                    completion(true)
+                    return
+                } else if self.getConnectionState() == .cancelled {
+                    completion(false)
+                    return
+                }
+
+                if Date().timeIntervalSince(startTime) > timeout {
+                    completion(false)
+                    return
+                }
+
+                usleep(100_000)
+            }
+        }
+    }
+
 
     public func connect(ip: String, port: Int) throws {
         guard let PORT = NWEndpoint.Port("\(port)") else {
@@ -51,19 +85,39 @@ public class NetworkPrinterManager {
             self?.onConnectionStateChange?(newState)
             
             switch newState {
-            case .ready:
-                UserDefaults.standard.set(true, forKey: "isConnected")
-            case .failed:
-                UserDefaults.standard.set(false, forKey: "isConnected")
-            case .cancelled:
-                UserDefaults.standard.set(false, forKey: "isConnected")
-            default:
-                UserDefaults.standard.set(false, forKey: "isConnected")
+                case .ready:
+                    self?.ip = ip
+                    self?.port = port
+                    UserDefaults.standard.set(true, forKey: "isConnected")
+                case .failed:
+                    UserDefaults.standard.set(false, forKey: "isConnected")
+                case .cancelled:
+                    UserDefaults.standard.set(false, forKey: "isConnected")
+                case .preparing:
+                    UserDefaults.standard.set(false, forKey: "isConnected")
+                default:
+                    UserDefaults.standard.set(false, forKey: "isConnected")
             }
         }
 
         networkConnection?.start(queue: queue)
     }
+    
+    public func disconnect(completion: @escaping () -> Void) {
+        guard let connection = networkConnection else {
+            completion()
+            return
+        }
+        
+        connection.stateUpdateHandler = { newState in
+            if newState == .cancelled {
+                completion()
+            }
+        }
+
+        connection.cancel()
+    }
+
 
     public func print(_ ticket: Ticket) throws {
         guard let connection = networkConnection else {
