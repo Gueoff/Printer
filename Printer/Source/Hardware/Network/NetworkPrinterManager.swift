@@ -145,16 +145,14 @@ public class NetworkPrinterManager {
     }
     
     private func getTicketData(_ ticket: Ticket) -> Data {
-        let encoding = String.Encoding.utf8
-        let ticketData = ticket.data(using: encoding)
-        var combinedData = ticketData.reduce(Data()) { (result, data) -> Data in
-            var mutableResult = result
-            mutableResult.append(data)
-            return mutableResult
+        var combinedData = Data()
+        let ticketData = ticket.data(using: .utf8)
+        for dataPart in ticketData {
+            combinedData.append(dataPart)
         }
 
         let paperCutCommand: [UInt8] = [0x1D, 0x56, 0x00]
-        combinedData.append(Data(paperCutCommand))
+        combinedData.append(contentsOf: paperCutCommand)
 
         return combinedData
     }
