@@ -5,7 +5,6 @@
 //  Created by Geoffrey Desbrosses on 19/09/2024.
 //  Copyright © 2024 Kevin. All rights reserved.
 //
-
 import Foundation
 import Network
 import MobileCoreServices
@@ -44,7 +43,7 @@ public class NetworkPrinterManager {
         return self.port
     }
     
-    public func waitForConnectionReady(timeout: TimeInterval = 6, completion: @escaping (Bool) -> Void) {
+    public func waitForConnectionReady(timeout: TimeInterval = 2, completion: @escaping (Bool) -> Void) {
         let startTime = Date()
 
         DispatchQueue.global().async {
@@ -67,7 +66,6 @@ public class NetworkPrinterManager {
         }
     }
 
-
     public func connect(ip: String, port: Int) throws {
         guard let PORT = NWEndpoint.Port("\(port)") else {
             throw TicketPrintError.port
@@ -75,7 +73,6 @@ public class NetworkPrinterManager {
 
         let ipAddress = NWEndpoint.Host(ip)
         let queue = DispatchQueue(label: "TCP Client Queue")
-
         let tcp = NWProtocolTCP.Options()
         tcp.noDelay = true
         let params = NWParameters(tls: nil, tcp: tcp)
@@ -108,16 +105,16 @@ public class NetworkPrinterManager {
             completion()
             return
         }
-        
+
         connection.stateUpdateHandler = { newState in
             if newState == .cancelled {
+                connection.stateUpdateHandler = nil
                 completion()
             }
         }
 
         connection.cancel()
     }
-
 
     public func print(_ ticket: Ticket) throws {
         guard let connection = networkConnection else {
@@ -127,12 +124,10 @@ public class NetworkPrinterManager {
         if connection.state != .ready {
             throw TicketPrintError.notConnected
         }
-
-        let content = getTicketData(ticket)
-
-        let dispatchGroup = DispatchGroup()
+        
         var printError: Error?
-
+        let content = getTicketData(ticket)
+        let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
 
         connection.send(content: content, completion: NWConnection.SendCompletion.contentProcessed({ (nwError) in
